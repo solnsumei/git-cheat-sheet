@@ -108,4 +108,16 @@ const validateLogin = (req, res, next) => {
   next();
 };
 
-export { validateLogin, validateSignup };
+const validateCategory = (req, res, next) => {
+  const { name } = req.body;
+
+  const nameError = checkFormField(name, 2, 20);
+  if (nameError) {
+    return errorResponse(res, { name: nameError, statusCode: 400 });
+  }
+
+  req.sanitizedBody = { name: name.trim() };
+  next();
+};
+
+export { validateLogin, validateSignup, validateCategory };
