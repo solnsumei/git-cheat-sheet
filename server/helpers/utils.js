@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+const notFoundError = { statusCode: 404, message: 'Resource not found' };
+
 const createToken = (user) => {
   const token = jwt.sign({ user: { id: user._id, name: user.name } },
     process.env.SECRET, { expiresIn: 60 * 60 * 2 });
@@ -8,6 +10,13 @@ const createToken = (user) => {
 };
 
 const isEmpty = object => Object.keys(object).length === 0;
+
+const isUnauthorised = (command, user) => {
+  if (!command.user.equals(user._id)) {
+    return { statusCode: 403, message: 'You do not have permission to perform this operation' };
+  }
+  return false;
+};
 
 const formatUser = user => ({
   _id: user._id,
@@ -36,5 +45,7 @@ export {
   isEmpty,
   createToken,
   formatUser,
-  errorResponse
+  errorResponse,
+  notFoundError,
+  isUnauthorised
 };

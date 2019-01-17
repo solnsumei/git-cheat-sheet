@@ -19,11 +19,7 @@ const UserSchema = {
     type: Boolean,
     allowNull: false,
     default: false,
-  },
-  commands: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Command'
-  }]
+  }
 };
 
 const User = mongoose.model('User', UserSchema, 'users');

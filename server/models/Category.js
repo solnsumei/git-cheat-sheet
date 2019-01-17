@@ -5,8 +5,7 @@ const CategorySchema = {
     type: String,
     allowNull: false,
     trim: true,
-  },
-  items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }]
+  }
 };
 
 const Category = mongoose.model('Category', CategorySchema, 'categories');
