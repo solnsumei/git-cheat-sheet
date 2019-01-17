@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import userController from '../controllers/user';
 import categoriesController from '../controllers/categories';
-import { validateSignup, validateLogin, validateCategory } from '../middlewares/validation';
+import commandsController from '../controllers/commands';
+import {
+  validateSignup, validateLogin,
+  validateCategory, validateCommand,
+  validateCategoryFields, validateCommandFields
+} from '../middlewares/validation';
 import authenticate from '../middlewares/authenticate';
 import admin from '../middlewares/admin';
 
@@ -18,8 +23,20 @@ router.get('/categories/:id', categoriesController.fetchOne);
 router.get('/categories', categoriesController.fetchAll);
 
 // Admin categories routes
-router.post('/categories', authenticate, admin, validateCategory, categoriesController.create);
-router.put('/categories/:id', authenticate, admin, validateCategory, categoriesController.update);
+router.post('/categories', authenticate, admin, validateCategoryFields, categoriesController.create);
+router.put('/categories/:id',
+  authenticate, admin, validateCategoryFields, categoriesController.update);
 router.delete('/categories/:id', authenticate, admin, categoriesController.delete);
+
+// commands routes
+router.get('/commands/:id', commandsController.fetchOne);
+router.get('/commands', commandsController.fetchAll);
+router.post('/commands',
+  authenticate, validateCommandFields, validateCategory, commandsController.create);
+router.put('/commands/:id',
+  authenticate, validateCommandFields,
+  validateCategory, validateCommand, commandsController.update);
+
+router.delete('/commands/:id', authenticate, validateCommand, commandsController.delete);
 
 export default router;
