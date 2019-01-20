@@ -26,15 +26,16 @@ const commandsController = {
         return res.status(201).send({
           success: true,
           message: 'Command saved successfully',
-          data: {
-            command
-          }
+          command
         });
       });
     });
   },
-  fetchAll(req, res) {
-    const match = {};
+  search(req, res) {
+    const { searchQuery } = req.body;
+    const match = searchQuery !== undefined
+      && searchQuery !== null && `${searchQuery}`.trim().length !== 0
+      ? { $text: { $search: `${searchQuery}` } } : {};
     Command.aggregate([
       { $match: match },
       {
@@ -60,34 +61,14 @@ const commandsController = {
     ])
       .exec((err, categories) => {
         if (err) {
-          return errorResponse(res);
+          return res.send(err);
+          // return errorResponse(res);
         }
 
         return res.status(200).send({
           success: true,
           message: 'Commands with categories fetched successfully',
-          data: {
-            categories
-          }
-        });
-      });
-  },
-  fetchOne(req, res) {
-    const { id } = req.params;
-
-    return Command.findById(id)
-      .populate('category')
-      .exec((err, command) => {
-        if (err || !command) {
-          return errorResponse(res, notFoundError);
-        }
-
-        return res.status(200).send({
-          success: true,
-          message: 'Command fetched successfully',
-          data: {
-            command
-          }
+          categories
         });
       });
   },
@@ -115,9 +96,7 @@ const commandsController = {
       return res.status(200).send({
         success: true,
         message: 'Command updated successfully',
-        data: {
-          command
-        }
+        command
       });
     });
   },

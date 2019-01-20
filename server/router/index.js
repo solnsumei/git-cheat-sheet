@@ -29,8 +29,7 @@ router.put('/categories/:id',
 router.delete('/categories/:id', authenticate, admin, categoriesController.delete);
 
 // commands routes
-router.get('/commands/:id', commandsController.fetchOne);
-router.get('/commands', commandsController.fetchAll);
+router.post('/commands/search', commandsController.search);
 router.post('/commands',
   authenticate, validateCommandFields, validateCategory, commandsController.create);
 router.put('/commands/:id',
@@ -38,5 +37,14 @@ router.put('/commands/:id',
   validateCategory, validateCommand, commandsController.update);
 
 router.delete('/commands/:id', authenticate, validateCommand, commandsController.delete);
+
+router.all('*', (req, res) => {
+  res.status(404).send({
+    success: false,
+    error: {
+      message: 'Route does not exist'
+    }
+  });
+});
 
 export default router;

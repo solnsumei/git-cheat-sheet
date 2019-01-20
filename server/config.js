@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const config = {
   development: {
     dbUrl: 'mongodb://localhost/cheatsheet-db'

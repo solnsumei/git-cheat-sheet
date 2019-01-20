@@ -2,3 +2,5 @@ tests
 server/config
 client/dist
 docs
+server/devServer.js
+client/src/index.js

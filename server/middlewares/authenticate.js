@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import { errorResponse } from '../helpers/utils';
+import { errorResponse, formatUser } from '../helpers/utils';
 
 /**
  * @description Authentication middleware to validate user
@@ -28,12 +28,12 @@ export default function authenticate(req, res, next) {
       return errorResponse(res, errorMsg);
     }
 
-    return User.findById(decoded.user.id, (err, user) => {
+    return User.findById(decoded.user._id, (err, user) => {
       if (err) {
         return errorResponse(res, error);
       }
 
-      req.auth = user;
+      req.auth = formatUser(user);
       next();
     });
   });

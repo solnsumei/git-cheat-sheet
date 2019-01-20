@@ -66,7 +66,7 @@ const validateSignup = (req, res, next) => {
     return noInputFieldsError(res);
   }
 
-  const nameError = checkFormField(name, 2, 20);
+  const nameError = checkFormField(name, 3, 30);
   if (nameError) {
     error.name = nameError;
   }
@@ -141,12 +141,12 @@ const validateCommandFields = (req, res, next) => {
     return noInputFieldsError(res);
   }
 
-  const snippetError = checkFormField(snippet, 3, 40, isUpdate);
+  const snippetError = checkFormField(snippet, 3, 60, isUpdate);
   if (snippetError) {
     error.snippet = snippetError;
   }
 
-  const actionError = checkFormField(action, 3, 40, isUpdate);
+  const actionError = checkFormField(action, 3, 100, isUpdate);
   if (actionError) {
     error.action = actionError;
   }

@@ -3,8 +3,15 @@ import jwt from 'jsonwebtoken';
 const notFoundError = { statusCode: 404, message: 'Resource not found' };
 
 const createToken = (user) => {
-  const token = jwt.sign({ user: { id: user._id, name: user.name } },
-    process.env.SECRET, { expiresIn: 60 * 60 * 2 });
+  const token = jwt.sign({
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin
+    }
+  },
+  process.env.SECRET, { expiresIn: 60 * 60 * 2 });
 
   return token;
 };
