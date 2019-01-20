@@ -1,0 +1,100 @@
+h1, h2, h3, p, .card-header {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: #efebe9;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.lg-text {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: bold;
+  line-height: 0in;
+  font-size: 18px;
+}
+
+.margin-top {
+  margin-top: 16px;
+}
+
+.margin-2x {
+  min-height: 16px !important;
+}
+
+.margin-1x {
+  min-height: 8px !important;
+}
+
+.card-text {
+  font-size: 13px;
+}
+
+.bg-33 {
+  background-color: #424242;
+}
+
+.text-33 {
+  color: #424242;
+  margin-right: 16px;
+}
+
+.text-grey {
+  color: #fcfcfc
+}
+
+.sidebar .form-control,
+.sidebar .form-control:focus, 
+.edit-card .form-control, 
+.edit-card .form-control:focus{
+  color: #fcfcfc;
+}
+
+.sidebar input::placeholder,
+.edit-card input::placeholder {
+  color: #757575;
+}
+
+code {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  color: orange;
+}
+
+.page-wrapper {
+  width: 100%;
+  padding: 10px;
+}
+
+.full-height {
+  min-height: 768px;
+  height: 100%;
+}
+
+.sidebar {
+  background-color: #424242;
+  position: absolute;
+  width: 300px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  padding: 5px;
+}
+
+.btn-span {
+  float: right;
+}
+
+.btn-span i {
+  padding-left: 8px;
+  cursor: pointer;
+}
+
+.btn-span i:hover {
+  opacity: 0.7;
+}

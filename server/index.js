@@ -1,31 +1,27 @@
-// Application entry point
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import app from './app';
-import dbConfig from './config';
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
+import './database';
+import router from './router/index';
 
-dotenv.config();
+const port = parseInt(process.env.PORT, 10) || 8000;
 
-const env = process.env.NODE_ENV || 'development';
-const databaseUrl = process.env.DATABASE_URL || dbConfig[env].dbUrl;
+// Set up express app
+const app = express();
+process.env.NODE_ENV = 'production';
 
-// connect to database
-mongoose.connect(databaseUrl, { useNewUrlParser: true });
+// Add body parser middleware to parse requests
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-const db = mongoose.connection;
+app.use('/api/v1', router);
 
-db.on('error', err => console.log(err));
+app.use(express.static('dist'));
 
-db.once('open', () => {
-  console.log('Database connection established');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-// Setup app port
-const port = parseInt(process.env.PORT, 10) || 3000;
+app.listen(port);
 
-// start server
-app.listen(port, (err) => {
-  if (err) {
-    console.log(err);
-  }
-});
+export default app;

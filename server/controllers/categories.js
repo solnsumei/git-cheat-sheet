@@ -1,8 +1,26 @@
+import mongoose from 'mongoose';
 import Category from '../models/Category';
 import Command from '../models/Command';
 import { errorResponse, notFoundError } from '../helpers/utils';
 
 const categoriesController = {
+  fetchCommands(res, category) {
+    return Command.find({ category: category._id }, (err, commands) => {
+      if (err) {
+        return errorResponse(res);
+      }
+
+      return res.status(200).send({
+        success: true,
+        message: 'Category fetched successfully',
+        category: {
+          _id: category._id,
+          name: category.name,
+          commands,
+        }
+      });
+    });
+  },
   create(req, res) {
     const { name } = req.sanitizedBody;
     return Category.findOne({ name }, (err, foundCategory) => {
@@ -24,50 +42,50 @@ const categoriesController = {
         return res.status(201).send({
           success: true,
           message: 'Category saved successfully',
-          data: {
-            category
-          }
+          category
         });
       });
     });
   },
   fetchAll(req, res) {
-    return Category.find({}, '_id, name', (err, categories) => {
-      if (err) {
-        return errorResponse(res);
-      }
-
-      return res.status(200).send({
-        success: true,
-        message: 'Categories fetched successfully',
-        data: {
-          categories
+    Category.aggregate([
+      {
+        $lookup: {
+          from: 'commands',
+          localField: '_id',
+          foreignField: 'category',
+          as: 'commands'
         }
+      },
+      { $project: { __v: 0 } }
+    ])
+      .exec((err, categories) => {
+        if (err) {
+          return errorResponse(res);
+        }
+
+        return res.status(200).send({
+          success: true,
+          message: 'Commands with categories fetched successfully',
+          categories
+        });
       });
-    });
   },
   fetchOne(req, res) {
     const { id } = req.params;
-
     return Category.findById(id, '_id, name', (err, category) => {
       if (err || !category) {
         return errorResponse(res, notFoundError);
       }
 
-      return res.status(200).send({
-        success: true,
-        message: 'Category fetched successfully',
-        data: {
-          category
-        }
-      });
+      return categoriesController.fetchCommands(res, category);
     });
   },
   update(req, res) {
     const { id } = req.params;
     const { name } = req.sanitizedBody;
 
-    return Category.findById(id, (err, category) => {
+    return Category.findById(id, '_id, name', (err, category) => {
       if (err || !category) {
         return errorResponse(res, notFoundError);
       }
@@ -85,13 +103,7 @@ const categoriesController = {
         category.name = name;
         category.save();
 
-        return res.status(200).send({
-          success: true,
-          message: 'Category updated successfully',
-          data: {
-            category
-          }
-        });
+        return categoriesController.fetchCommands(res, category);
       });
     });
   },

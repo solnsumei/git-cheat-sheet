@@ -30,10 +30,8 @@ const userController = {
         return res.status(201).send({
           success: true,
           message: 'Sign up successful',
-          data: {
-            token,
-            user: formatUser(savedUser)
-          }
+          user: formatUser(savedUser),
+          token,
         });
       });
     });
@@ -56,10 +54,8 @@ const userController = {
       return res.status(200).send({
         success: true,
         message: `Welcome back ${user.name}`,
-        data: {
-          token,
-          user: formatUser(user)
-        }
+        user: formatUser(user),
+        token
       });
     });
   }
