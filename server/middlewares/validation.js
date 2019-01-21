@@ -120,7 +120,7 @@ const validateLogin = (req, res, next) => {
 const validateCategoryFields = (req, res, next) => {
   const { name } = req.body;
 
-  const nameError = checkFormField(name, 2, 20);
+  const nameError = checkFormField(name, 3, 30);
   if (nameError) {
     return errorResponse(res, { name: nameError, statusCode: 400 });
   }

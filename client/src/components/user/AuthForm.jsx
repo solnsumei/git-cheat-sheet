@@ -7,7 +7,7 @@ import { userSignUpRequest, loginRequest } from '../../actions/userActions';
  * @class Sidebar
  * @extends {React.Component}
  */
-class AuthForm extends React.Component {
+export class AuthForm extends React.Component {
   initState = () => ({
     isLogin: true,
     formData: {

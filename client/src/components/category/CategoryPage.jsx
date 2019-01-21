@@ -20,14 +20,7 @@ import {
  * @class CategoryPage
  * @extends {React.Component}
  */
-class CategoryPage extends React.Component {
-  // Initialise empty category
-  initCategory = () => ({
-    _id: null,
-    name: ''
-  });
-
-  // Initialize empty command
+export class CategoryPage extends React.Component {
   initCommand = () => ({
     _id: null,
     snippet: '',
@@ -35,16 +28,19 @@ class CategoryPage extends React.Component {
     category: null
   });
 
-  // fresh state
+  initCategory = () => ({
+    _id: null,
+    name: '',
+  });
+
   freshState = () => ({
     categoryNameError: null,
-    editingCategoryId: null,
     showEditCategoryForm: false,
     showCommandForm: false,
     command: this.initCommand(),
     category: this.initCategory(),
     error: null,
-  });
+  })
 
   state = this.freshState();
 
@@ -152,7 +148,7 @@ class CategoryPage extends React.Component {
    */
   showEditCategoryForm = (category) => {
     this.setState({
-      category,
+      category: { ...category },
       categoryNameError: null,
       showEditCategoryForm: true
     });
@@ -168,12 +164,12 @@ class CategoryPage extends React.Component {
    * @return {void}
    */
   showCommandFormHandler = (category, command = null) => {
-    const commandToEdit = command || { ...this.state.command };
+    const commandToEdit = command !== null ? { ...command } : { ...this.state.command };
     if (commandToEdit.category === null) {
       commandToEdit.category = category._id;
     }
     this.setState({
-      category,
+      category: { ...category },
       command: commandToEdit,
       categoryNameError: null,
       showCommandForm: true
@@ -212,12 +208,7 @@ class CategoryPage extends React.Component {
    * @return {void}
    */
   resetEdit = () => {
-    this.setState({
-      showCommandForm: false,
-      showEditCategoryForm: false,
-      category: this.initCategory(),
-      command: this.initCommand()
-    });
+    this.setState(this.freshState());
   }
 
   /**
@@ -273,12 +264,12 @@ class CategoryPage extends React.Component {
  */
   componentDidUpdate(prevProps) {
     if (!prevProps.user && this.props.user) {
-      this.setState(this.freshState);
+      this.setState(this.freshState());
       this.props.fetchCategories();
     }
 
     if (prevProps.user && !this.props.user) {
-      this.setState(this.freshState);
+      this.setState(this.freshState());
       this.props.searchItem();
     }
   }

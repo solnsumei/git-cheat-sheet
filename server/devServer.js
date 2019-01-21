@@ -6,6 +6,7 @@ import './database';
 import config from '../webpack.config.dev';
 import router from './router/index';
 
+const env = process.env.NODE_ENV || 'development'
 // Set up express app
 const app = express();
 const compiler = webpack(config);
@@ -15,12 +16,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Webpack middlewares for development
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
+if (env === 'development') {
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+  app.use(require('webpack-hot-middleware')(compiler));
+}
 
 app.use('/api/v1', router);
 
