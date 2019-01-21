@@ -9,7 +9,7 @@ const CategoryList = ({
   onDeleteCategory,
   showCommandForm
 }) => (
-    <div className="row">
+    <div className="card-columns">
       {categories.length > 0
         ? categories.map(
           category => <CategoryListItem

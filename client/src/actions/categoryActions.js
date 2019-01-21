@@ -101,8 +101,7 @@ export const deleteCategory = category => (dispatch) => {
   if (!checkToken(dispatch)) return dispatch(logoutUser());
 
   return axios.delete(`/categories/${category._id}`)
-    .then(() => dispatch(deleteCategorySuccess(category)))
-    .catch(() => dispatch(actionError()));
+    .then(() => dispatch(deleteCategorySuccess(category)));
 };
 
 /**
@@ -149,11 +148,9 @@ export const deleteCommand = command => (dispatch) => {
 
   return axios.delete(`/commands/${command._id}`)
     .then(({ data }) => {
-      console.log(data);
       dispatch(fetchCategory(command.category));
     })
     .catch(({ response }) => {
-      console.log(response);
       dispatch(actionError());
     });
 };

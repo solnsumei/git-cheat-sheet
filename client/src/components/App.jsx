@@ -11,7 +11,7 @@ import { logoutRequest } from '../actions/userActions';
  * @class App
  * @extends {React.Component}
  */
-class App extends React.Component {
+export class App extends React.Component {
   state = {
     showSidebar: false
   };
@@ -38,7 +38,7 @@ class App extends React.Component {
    * @memberof App
    */
   render() {
-    const { categories, user } = this.props;
+    const { user } = this.props;
     return (
       <div className="page-wrapper">
         <span className="float-right">
@@ -62,7 +62,6 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  categories: state.categories,
   user: state.user
 });
 

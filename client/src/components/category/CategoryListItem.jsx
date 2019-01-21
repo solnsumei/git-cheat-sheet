@@ -9,8 +9,7 @@ const CategoryListItem = ({
   onDelete,
   showCommandForm
 }) => (
-  <div className="col-sm-6 col-lg-4">
-    <div className="card border-dark bg-33 text-grey mb-3">
+    <div className="card bg-33 text-grey mb-3">
         <div className="card-header">{category.name.toUpperCase()}
           {user && user.isAdmin
             && <span className="btn-span">
@@ -43,7 +42,6 @@ const CategoryListItem = ({
           </p>
       </div>
     </div>
-  </div>
 );
 
 export default CategoryListItem;

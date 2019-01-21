@@ -19,7 +19,6 @@ export default function (state = initialState.categories, action) {
       return [...state, action.category];
 
     case types.UPDATE_CATEGORY_SUCCESS:
-      console.log('>>>>>>>>>>>>>>>', action.category);
       return [...state.filter(category => category._id !== action.category._id),
         action.category
       ];

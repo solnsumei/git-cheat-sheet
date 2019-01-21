@@ -98,3 +98,33 @@ code {
 .btn-span i:hover {
   opacity: 0.7;
 }
+
+.text-lg {
+  font-size: 20px;
+}
+
+.search-form label {
+  top: 10px;
+  position: absolute;
+  color:#666666;
+  transition: 0.2s ease all;
+}
+
+#search {
+  font-size: 24px;
+}
+
+#search:focus ~ label, #search:valid ~ label {
+  transform: translateY(-30px);
+  font-size: 18px;
+}
+
+.card-columns > .card {
+  box-shadow: none;
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .card-columns {
+    column-count: 2;
+  }
+}

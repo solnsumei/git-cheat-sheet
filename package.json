@@ -10,7 +10,8 @@
     "seed": "NODE_ENV=production babel-node server/seeders/adminUserSeeder.js",
     "start:dev": "nodemon --exec babel-node server/devServer.js",
     "start": "babel-node server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:client": "jest test",
+    "test": "NODE_ENV=test nyc --reporter=lcov --reporter=text mocha --exit ./server/tests/test/* --require @babel/register --timeout 10000",
     "heroku-postbuild": "yarn build"
   },
   "repository": {
@@ -64,7 +65,6 @@
     "webpack-hot-middleware": "^2.24.3"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
@@ -72,8 +72,9 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
-    "bcrypt": "^3.0.3",
     "@fortawesome/fontawesome-free": "^5.6.3",
+    "axios": "^0.18.0",
+    "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
