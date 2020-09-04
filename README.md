@@ -1,4 +1,4 @@
-# GIt Cheat Sheet
+# Git Cheat Sheet
 Repository for saving your favorite git commands
 
 ## Features
